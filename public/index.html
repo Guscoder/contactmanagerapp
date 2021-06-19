@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Contact Manager</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/javascripts/jquery.js"></script>
+    <script src="/javascripts/handlebars.js"></script>
+    <script type="module" src="/javascripts/app.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>Contact Manager</h1>
+    </header>
+    <main>
+      <section class="main-header">
+        <div class='button-bar'>
+          <input id="addContactButton" type="button" value="Add Contact"></input>
+        <input id="searchBar" type="text" placeholder="Search"></input>
+        <label for="tags">Filter By Tag:  </label>
+        <select name="tags" id="tagSelect">
+          <option value="all" selected>All</option>
+        </select>
+        </div>
+        <div id='contactsDisplay'>
+          <ul id="contactsList"></ul>
+        </div>
+      </section>
+      
+      <section id="addContactDisplay" class="addContactDisplay">
+        <h2>Create Contact</h2>
+        
+        <form id="form">
+          <label for="full_name">Full Name: </label>
+          <input type="text" name="full_name" id="contactName">
+          <label for="email">Email Address:</label>
+          <input type="email" name="email" id="email">
+          <label for="phone_number">Phone Number: </label>
+          <input type="tel" name="phone_number" id="phone">
+          <label for="tagList">Select Tag: </label>
+          <select name="tagList" id="selectTag" multiple>
+          </select>
+          <label for="tags">Add/Create Tag: </label>
+          <input type="text" name="tags" id="createTagInput">
+          <div>
+            <input type="submit" class="form-button" value="Add Contact" >
+            <input type="button" class="cancelAddButton form-button" value="Cancel" >
+          </div>
+          
+        </form>
+      </section>
+      <section id="displayEditForm"></section>
+    </main> 
+    <script id="showContacts" type="text/x-handlebars-template">
+        {{#each contacts}}
+          <li class="contact-list-item" data-id={{id}}>
+            <dl>
+              <dt class="contact-name">{{full_name}}</dt>
+              <dt class="list-heading">Phone Number:</dt>
+              <dd>{{phone_number}}</dd>
+              <dt class="list-heading">Email:</dt>
+              <dd>{{email}}</dd>
+              <dt class="list-heading">Tags:</dt>
+              <dd>{{tags}}</dd>
+            </dl>
+            <div class='contact-buttons'>
+              <input type="button" value="Edit" class="editContactButton form-button" >
+            <input type="button" value="Delete" class="deleteContactButton form-button">
+            </div>
+            
+            <hr>
+          </li>
+        {{/each}}
+    </script>
+    <script id="editContactScript" type="text/x-handlebars-template">
+      <h2>Edit Contact</h2>
+          <form id="editForm">
+            <label for="full_name">Full Name: </label>
+            <input type="text" name="full_name" value="{{full_name}}" id="editContactName">
+            <label for="email">Email Address:</label>
+            <input type="email" name="email" id="email" value="{{email}}">
+            <label for="phone_number">Phone Number: </label>
+            <input type="tel" name="phone_number" id="phone" value="{{phone_number}}">
+            <label for="tagList">Select Tag: </label>
+            <select name="tagList" id="editSelectTag" multiple></select>
+            <label for="tags">Tags: </label>
+            <input type="text" name="tags" id="editTagInput" value="{{tags}}">
+            <div>
+               <input type="submit" value="Update Contact" class='form-button'>
+              <input type="button" value="Cancel" class="cancelEditButton form-button">
+            </div>
+           
+          </form>
+    </script>
+    <script id="createTagOptions" type="text/x-handlebars-template">
+      <option value='all' name="tags">All</option>
+        {{#each tags}}
+        <option value={{this}} name="tags">{{this}}</option>
+        {{/each}}
+    </script>
+  </body>
+</html>
