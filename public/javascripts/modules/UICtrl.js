@@ -1,5 +1,4 @@
 import { ContactCtrl } from "./ContactCtrl.js";
-import { ContactsAPI } from "./ContactsAPI.js";
 
 export const UICtrl = (() => {
   const UIselectors = {
@@ -57,23 +56,19 @@ export const UICtrl = (() => {
     },
     renderTagOptions(tagsArray, displayId) {
       // Retrieve the template data from the HTML (jQuery is used here).
-      console.log({ tags: tagsArray });
       var template = document.getElementById("createTagOptions").innerHTML;
       // Compile the template data into a function
       var templateScript = Handlebars.compile(template);
       // Insert data andrun scriptto get HTML
       var html = templateScript({ tags: tagsArray });
       // Insert the HTML code into the page
-      console.log(html);
       // document.getElementById(displayId).insertAdjacentHTML("beforeend", html);
       document.getElementById(displayId).innerHTML = html;
     },
     async populateContactsList() {
       let contactsList = await ContactCtrl.getAllContacts();
-      console.log(contactsList.length);
 
       if (contactsList.length === 0) {
-        console.log("hey im 0");
         document.getElementById(UIselectors.contactsList).innerText =
           "There are no contacts to display.";
         // "<li>There are no contacts to display.</li>";
@@ -91,16 +86,12 @@ export const UICtrl = (() => {
       ContactCtrl.addNewContact(contactData);
     },
     async editContact(e) {
-      console.log("editing");
       let contactId = e.target.parentElement.parentElement.dataset.id;
       let contact = await ContactCtrl.getSingleContact(contactId);
-      console.log(contact);
       this.registerEditContactTemplates(contact);
-      console.log(document.getElementById("editSelectTag"));
       document
         .getElementById("editSelectTag")
         .addEventListener("change", (e) => {
-          console.log("selectbuttonworking");
           this.addTagsToTagInput("editSelectTag", "editTagInput");
         });
       const editContactForm = document.getElementById(
@@ -108,7 +99,6 @@ export const UICtrl = (() => {
       );
       // document.getElementById("editContactName").value = contact.full_name;
       editContactForm.addEventListener("submit", (e) => {
-        console.log("update form submitted");
         let contactData = new FormData(editContactForm);
         ContactCtrl.updateContact(contactId, contactData);
         this.updateContact(contactId, contactData);
@@ -150,11 +140,7 @@ export const UICtrl = (() => {
       }
       let selectedTags = getSelectedOptions(selectList);
       const tagInput = document.getElementById(inputElementId);
-      console.log(tagInput);
       tagInput.value = selectedTags;
     },
-    clearForm() {},
-    cancelAction() {},
-    displayAddContactForm() {},
   };
 })();

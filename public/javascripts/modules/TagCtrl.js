@@ -4,9 +4,6 @@ export class TagCtrl {
   constructor() {
     this.tags = this.getAllTagNames();
   }
-  createTag() {}
-  deleteTag() {}
-  renderTagOptions() {}
   getUniqueTagNames(tagArray) {
     let tagList = [];
     tagArray.forEach((contact) => {

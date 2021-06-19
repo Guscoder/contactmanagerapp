@@ -1,7 +1,5 @@
 import { UICtrl } from "./modules/UICtrl.js";
-import * as ContactsAPI from "./modules/ContactsAPI.js";
 import { TagCtrl } from "./modules/TagCtrl.js";
-import * as ContactCtrl from "./modules/ContactCtrl.js";
 
 class App {
   // Load event listeners
@@ -37,7 +35,6 @@ class App {
     document
       .getElementById(UISelectors.tagSelect)
       .addEventListener("change", (e) => {
-        console.log(e.target.value);
         this.filterContactsByTag(e.target.value);
       });
     document.addEventListener("click", (e) => {
@@ -52,7 +49,6 @@ class App {
     });
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains("cancelAddButton")) {
-        console.log("cancel me");
         this.cancelAddContact();
       }
     });
@@ -64,7 +60,6 @@ class App {
   };
 
   addContactSubmit = (e) => {
-    console.log("addcontact");
     let contactData = new FormData(form);
     UICtrl.addNewContact(contactData);
     UICtrl.populateContactsList();
@@ -72,7 +67,6 @@ class App {
     e.preventDefault();
   };
   deleteContactSubmit = (e) => {
-    console.log("delete item app");
     UICtrl.deleteContact(e);
   };
   displayContacts = () => {
@@ -83,7 +77,6 @@ class App {
     this.renderTagOptions("editSelectTag");
   };
   displayAddContactForm = (e) => {
-    console.log("getting form");
     document.getElementById("addContactDisplay").classList.add("slidemeup");
     document.getElementById("addContactDisplay").classList.remove("hide");
     document.querySelector(".main-header").classList.remove("slidemeup");
@@ -91,7 +84,6 @@ class App {
   cancelEditContact = () => {
     document.querySelector(".main-header").classList.add("slidemeup");
     setTimeout(() => {
-      console.log("cancel");
       document.querySelector("#displayEditForm").classList.remove("slidemeup");
       document.querySelector("#displayEditForm").classList.add("hide");
       document.querySelector("#displayEditForm").innerHTML = "";
@@ -100,7 +92,6 @@ class App {
   cancelAddContact = () => {
     document.querySelector(".main-header").classList.add("slidemeup");
     setTimeout(() => {
-      console.log("cancel");
       document
         .querySelector(".addContactDisplay")
         .classList.remove("slidemeup");
@@ -109,9 +100,7 @@ class App {
   async renderTagOptions(displayId) {
     const tagManager = new TagCtrl();
     let allTags = await tagManager.tags;
-    console.log(displayId);
     UICtrl.renderTagOptions(allTags, displayId);
-    console.log(allTags);
   }
   filterContactsByTag = (tag) => {
     UICtrl.displayContactsByTagFilter(tag);
@@ -120,7 +109,6 @@ class App {
     UICtrl.searchContacts(searchString);
   };
   init() {
-    console.log("app loading");
     this.bindEventListeners();
     this.displayContacts();
     this.renderTagOptions("tagSelect");
